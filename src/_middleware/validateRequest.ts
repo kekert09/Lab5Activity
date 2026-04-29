@@ -1,22 +1,17 @@
-// src/_middleware/validateRequest.ts
-import type { Request, NextFunction } from 'express';
+// src/_middleware/validate-request.ts
 import Joi from 'joi';
 
-export function validateRequest(
-  req: Request,
-  next: NextFunction,
-  schema: Joi.ObjectSchema
-): void {
+export default function validateRequest(req: any, next: any, schema: Joi.ObjectSchema) {
   const options = {
     abortEarly: false,
     allowUnknown: true,
-    stripUnknown: true,
+    stripUnknown: true
   };
 
   const { error, value } = schema.validate(req.body, options);
 
   if (error) {
-    next(`Validation error: ${error.details.map((d) => d.message).join(', ')}`);
+    next(`Validation error: ${error.details.map((x: any) => x.message).join(', ')}`);
   } else {
     req.body = value;
     next();

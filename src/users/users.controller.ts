@@ -3,12 +3,12 @@ import type { Request, Response, NextFunction } from 'express';
 import { Router } from 'express';
 import Joi from 'joi';
 import { Role } from '../_helpers/role';
-import { validateRequest } from '../_middleware/validateRequest';
+import validateRequest from '../_middleware/validateRequest';
 import { userService } from './user.service';
 
 const router = Router();
 
-// 🛣 ROUTES
+// ROUTES
 router.get('/', getAll);
 router.get('/:id', getById);
 router.post('/', createSchema, create);
@@ -48,7 +48,7 @@ function _delete(req: Request, res: Response, next: NextFunction): void {
     .catch(next);
 }
 
-// 🔑 VALIDATION SCHEMAS
+//  VALIDATION SCHEMAS
 function createSchema(req: Request, res: Response, next: NextFunction): void {
   const schema = Joi.object({
     title: Joi.string().required(),
